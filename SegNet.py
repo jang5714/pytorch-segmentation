@@ -16,7 +16,6 @@ def test():
     else:
         a = 'false'
         return a
-    return a
 
 
 def double_conv(input, output):
@@ -25,7 +24,7 @@ def double_conv(input, output):
     )
 
 class SegNet(nn.Module):
-    def __init__(self,in_channels=3, pretrained=True, freeze_bn=False):
+    def __init__(self, in_channels=3, pretrained=True, freeze_bn=False):
         super(SegNet, self).__init__()
         vgg_bn = models.vgg16_bn(pretrained=pretrained)
         encoder = list(vgg_bn.features.children())
@@ -43,12 +42,37 @@ class SegNet(nn.Module):
         self.stage5_encoder = nn.Sequential(*encoder[34:-1])
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
 
+    def forward(self):
+        return ''
+
+
+class SegNettest(nn.Module):
+    def __init__(self):
+        super(SegNettest, self).__init__()
+        in_chanel = 3
+        out_size = 64
+
+        self.maxpool = nn.MaxPool2d(kernel_size=3,stride=2,return_indices=True)
+        self.conv1 = nn.Conv2d(in_chanel,64,kernel_size=3,padding=1)
+        self.conv2 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+        self.conv3 = nn.Conv2d(128, 256, kernel_size=3,padding=1)
+        self.conv4 = nn.Conv2d(256, 512, kernel_size=3, padding=1)
+        self.upSam = nn.MaxUnpool2d(kernel_size=2, stride=2)
+        self.batchome = nn.BatchNorm2d(64)
+
 
 
     def forward(self):
-        return ''
+
+
+
+
+        return None
+
+
 
 
 
 if __name__ == '__main__':
     test()
+
